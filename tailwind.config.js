@@ -13,7 +13,7 @@
     },
     backgroundImage: {
       'BG': "url('img/BG GOMODE.png')",
-      'BGG': "url('img/ky.png')",
+      'BGG': "url('img/KY.png')",
       'KY':"url('img/k6y.png')",
     }
 
