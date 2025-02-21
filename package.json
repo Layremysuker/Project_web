@@ -1,8 +1,11 @@
 {
   "devDependencies": {
     "tailwindcss": "^3.4.17"
-  },"scripts": {
-"build-css": "tailwindcss build -i src/input.css -o src/output.css"
-}
-  
+  },
+  "scripts": {
+    "build-css": "tailwindcss build -i src/input.css -o src/output.css"
+  },
+  "dependencies": {
+    "@material-tailwind/react": "^2.1.10"
+  }
 }
