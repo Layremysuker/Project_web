@@ -9,72 +9,138 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.3.0/dist/tailwind.min.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/alpinejs/3.12.0/cdn.min.js" defer></script>
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="https://cdn.tailwindcss.com"></script>
+        <title>Speed Dial</title>
+        <style>
+            /* เอฟเฟกต์ตอนที่ contact ปรากฏออกมา */
+            .scale-enter {
+                transform: scale(0);
+                opacity: 0;
+            }
+            .scale-show {
+                transform: scale(1);
+                opacity: 1;
+                transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease-out;
+            }
+    
+            /* เอฟเฟกต์คลื่นแสง */
+            .ripple {
+                position: absolute;
+                border-radius: 50%;
+                background: rgba(255, 255, 255, 0.4);
+                animation: ripple-animation 0.5s ease-out;
+            }
+    
+            @keyframes ripple-animation {
+                from {
+                    transform: scale(0);
+                    opacity: 0.7;
+                }
+                to {
+                    transform: scale(3);
+                    opacity: 0;
+                }
+            }
+            html {
+  scroll-behavior: smooth;
+}
+        </style>
 </head>
 <body class="bg-black font-inter ">
-    <!-- Navber -->
-    <nav id="navbar" class="bg-black text-white flex justify-between items-center px-6 py-4 fixed top-0 left-0 w-full z-10 transition-all">
-        <div class="text-2xl font-bold flex items-center">
-            <span class="text-yellow-400">⚡</span> GO MODE
-        </div>
-        <div class="hidden md:flex space-x-6">
-            <a href="#" class="hover:text-yellow-400 hover:font-extrabold">Home</a>
-            <a href="#" class="hover:text-yellow-400 hover:font-extrabold">Product category</a>
-            <a href="#" class="hover:text-yellow-400 hover:font-extrabold">Order products</a>
-            <a href="#" class="hover:text-yellow-400 hover:font-extrabold">FAQ</a>
-        </div>
-        <div class="flex space-x-4 items-center">
-            <button class="bg-orange-400 text-black px-4 py-2 rounded-lg font-semibold hover:bg-orange-500">
-                LOGIN
-            </button>
-            <div class="w-8 h-8 bg-gray-600 rounded-full"></div>
-            <!-- ปุ่มเมนูสำหรับ Mobile -->
-            <button id="menu-toggle" class="md:hidden">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2"
-                    viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"></path>
-                </svg>
-            </button>
-        </div>
-    </nav>
-    
-    <!-- เมนู Mobile -->
-    <div id="mobile-menu" class="hidden bg-black text-white px-6 py-4 w-full md:hidden fixed top-16 left-0 z-20">
-        <a href="#" class="block py-2 hover:text-yellow-400 hover:font-extrabold">Home</a>
-        <a href="#" class="block py-2 hover:text-yellow-400 hover:font-extrabold">Product category</a>
-        <a href="#" class="block py-2 hover:text-yellow-400 hover:font-extrabold">Order products</a>
-        <a href="#" class="block py-2 hover:text-yellow-400 hover:font-extrabold">FAQ</a>
-    </div>
-    
-    <script>
-        let lastScrollTop = 0;
-        const navbar = document.getElementById('navbar');
-        const menuToggle = document.getElementById('menu-toggle');
-        const mobileMenu = document.getElementById('mobile-menu');
-    
-        // เมนูมือถือ เปิด/ปิด
-        menuToggle.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');  // เปิด/ปิดเมนู
-        });
-    
-        window.addEventListener('scroll', function() {
-            let currentScroll = window.pageYOffset || document.documentElement.scrollTop;
-    
-            if (currentScroll > lastScrollTop) {
-                // Scroll Down - Hide Navbar
-                navbar.classList.add('transform', '-translate-y-full');
-                mobileMenu.classList.add('transform', '-translate-y-full');
-            } else {
-                // Scroll Up - Show Navbar
-                navbar.classList.remove('transform', '-translate-y-full');
-                mobileMenu.classList.remove('transform', '-translate-y-full');
-            }
-            lastScrollTop = currentScroll <= 0 ? 0 : currentScroll; // For Mobile or negative scrolling
-        });
-    </script>
-    
+<!-- Navbar -->
+<nav id="navbar" class="bg-black text-white flex justify-between items-center px-6 py-4 fixed top-0 left-0 w-full z-10 transition-all">
+  <div class="text-2xl font-bold flex items-center">
+      <span class="text-yellow-400">⚡</span> GO MODE
+  </div>
+  <div class="hidden md:flex space-x-6">
+      <a href="#home" class="hover:text-yellow-400 hover:font-extrabold">Home</a>
+      <a href="#products" class="hover:text-yellow-400 hover:font-extrabold">Product category</a>    
+      <a href="#" class="hover:text-yellow-400 hover:font-extrabold">Order products</a>
+      <a href="#" class="hover:text-yellow-400 hover:font-extrabold">FAQ</a>
+  </div>
+  <div class="flex space-x-4 items-center">
+      <button id="login-btn" class="bg-orange-400 text-black px-4 py-2 rounded-lg font-semibold hover:bg-orange-500">
+          LOGIN
+      </button>
+      <div class="w-8 h-8 bg-gray-600 rounded-full"></div>
+      <button id="menu-toggle" class="md:hidden">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"></path>
+          </svg>
+      </button>
+  </div>
+</nav>
+
+<!-- Mobile Menu -->
+<div id="mobile-menu" class="hidden bg-black text-white px-6 py-4 w-full md:hidden fixed top-16 left-0 z-20">
+  <a href="#" class="block py-2 hover:text-yellow-400 hover:font-extrabold">Home</a>
+  <a href="#" class="block py-2 hover:text-yellow-400 hover:font-extrabold">Product category</a>
+  <a href="#" class="block py-2 hover:text-yellow-400 hover:font-extrabold">Order products</a>
+  <a href="#" class="block py-2 hover:text-yellow-400 hover:font-extrabold">FAQ</a>
+</div>
+
+<!-- Login Form (Hidden by Default) -->
+<div id="registration-form" class="hidden fixed inset-0 flex justify-center items-center bg-gray-800 bg-opacity-50 backdrop-blur-md z-[9999] font-Kanit">
+  <div class="bg-white p-8 shadow-lg rounded-lg w-96 relative">
+      <button id="close-form" class="absolute top-2 right-2 text-gray-500 hover:text-gray-700 text-2xl">&times;</button>
+      <h2 class="text-2xl font-bold text-gray-700 mb-2">เข้าสู่ระบบ</h2>
+      <p class="text-gray-500 mb-6">กรุณากรอกอีเมลและรหัสผ่านเพื่อเข้าสู่ระบบ</p>
+      <form>
+          <label class="block text-gray-700 font-semibold">อีเมล</label>
+          <input type="email" placeholder="name@mail.com" class="w-full p-2 border rounded-lg mb-4 focus:border-gray-900">
+          
+          <label class="block text-gray-700 font-semibold">รหัสผ่าน</label>
+          <input type="password" placeholder="********" class="w-full p-2 border rounded-lg mb-4 focus:border-gray-900">
+          
+          <button class="w-full bg-som text-white p-2 rounded-lg hover:bg-orange-500">เข้าสู่ระบบ</button>
+          
+          <p class="text-center text-gray-500 text-sm mt-4">ยังไม่มีบัญชี? <a href="#" class="text-gray-900 font-semibold">สมัครสมาชิก</a></p>
+      </form>
+  </div>
+</div>
+
+<script>
+  let lastScrollTop = 0;
+  const navbar = document.getElementById('navbar');
+  const menuToggle = document.getElementById('menu-toggle');
+  const mobileMenu = document.getElementById('mobile-menu');
+  const loginBtn = document.getElementById('login-btn');
+  const registrationForm = document.getElementById('registration-form');
+  const closeForm = document.getElementById('close-form');
+
+  menuToggle.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+  });
+
+  window.addEventListener('scroll', function() {
+      let currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+      if (currentScroll > lastScrollTop) {
+          navbar.classList.add('transform', '-translate-y-full');
+          mobileMenu.classList.add('transform', '-translate-y-full');
+      } else {
+          navbar.classList.remove('transform', '-translate-y-full');
+          mobileMenu.classList.remove('transform', '-translate-y-full');
+      }
+      lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
+  });
+
+  loginBtn.addEventListener('click', () => {
+      registrationForm.classList.remove('hidden');
+  });
+
+  closeForm.addEventListener('click', () => {
+      registrationForm.classList.add('hidden');
+  });
+</script>
+
     
 <!-- Head 1 -->
-<div class="bg-BG h-screen">
+<div id="home" class="bg-BG h-screen">
     <section class="max-w-4xl mx-auto py-12" x-data="carousel()">
         <h1 class="text-4xl font-bold text-center mb-6">Head 1</h1>
         
@@ -245,9 +311,8 @@
 
   
 <!-- Cards Section -->
-<section class="py-16 px-10 bg-black">
-    <div class="flex flex-wrap justify-center gap-16 mx-auto">
-  
+<section id="products" class="py-16 px-10 bg-black min-h-screen font-Kanit">
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 mx-auto max-w-6xl">
         <!-- Card 1 -->
         <div class="h-96 w-60 bg-white border shadow-lg rounded-lg overflow-hidden transition-transform duration-300 ease-in-out hover:scale-105 hover:shadow-xl hover:bg-gray-100">
             <img
@@ -345,11 +410,111 @@
 
   
 <br><br><br><br>  
-  
-  
-  
-  
-  
+
+<!-- ปุ่มMENu -->
+    <!-- Speed Dial Floating Button -->
+    <div class="fixed bottom-6 right-6 flex flex-col items-center font-Kanit">
+      <!-- Speed Dial Actions -->
+      <div id="speedDialMenu" class="hidden flex flex-col items-center gap-3 mb-4">
+          <a href="#" target="_blank" class="w-12 h-12 flex items-center justify-center bg-white shadow-md rounded-full hover:bg-gray-200 transition-all duration-200 transform hover:scale-110 scale-enter">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" alt="Facebook" class="w-6 h-6">
+          </a>
+          <a href="#" target="_blank" class="w-12 h-12 flex items-center justify-center bg-white shadow-md rounded-full hover:bg-gray-200 transition-all duration-200 transform hover:scale-110 scale-enter">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/LINE_New_App_Icon_%282020-12%29.png/480px-LINE_New_App_Icon_%282020-12%29.png" alt="Line" class="w-6 h-6">
+          </a>
+          <a href="#" target="_blank" class="w-12 h-12 flex items-center justify-center bg-white shadow-md rounded-full hover:bg-gray-200 transition-all duration-200 transform hover:scale-110 scale-enter">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram" class="w-6 h-6">
+          </a>
+      </div>
+
+      <!-- Speed Dial Button -->
+      <button id="speedDialBtn" class="relative w-14 h-14 flex items-center justify-center bg-orange-500 text-white rounded-full shadow-lg transition-transform transform hover:scale-110 active:shadow-md">
+          <svg id="speedDialIcon" class="w-6 h-6 transition-transform transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+          </svg>
+      </button>
+  </div>
+
+  <script>
+      const speedDialBtn = document.getElementById('speedDialBtn');
+      const speedDialMenu = document.getElementById('speedDialMenu');
+      const speedDialIcon = document.getElementById('speedDialIcon');
+      const contacts = speedDialMenu.querySelectorAll("a");
+
+      speedDialBtn.addEventListener('click', function(event) {
+          const isHidden = speedDialMenu.classList.contains('hidden');
+          
+          if (isHidden) {
+              speedDialMenu.classList.remove('hidden');
+              contacts.forEach((contact, index) => {
+                  setTimeout(() => {
+                      contact.classList.add('scale-show');
+                  }, index * 100);
+              });
+          } else {
+              contacts.forEach((contact, index) => {
+                  setTimeout(() => {
+                      contact.classList.remove('scale-show');
+                  }, index * 100);
+              });
+              setTimeout(() => {
+                  speedDialMenu.classList.add('hidden');
+              }, contacts.length * 100);
+          }
+          
+          // หมุนปุ่มและทำให้กระเด้ง
+          speedDialIcon.classList.toggle('rotate-45');
+          speedDialBtn.classList.add('scale-90');
+          setTimeout(() => speedDialBtn.classList.remove('scale-90'), 200);
+
+          // สร้างเอฟเฟกต์ ripple
+          const ripple = document.createElement('span');
+          ripple.classList.add('ripple');
+          ripple.style.width = ripple.style.height = `${speedDialBtn.clientWidth * 2}px`;
+          ripple.style.left = `${event.clientX - speedDialBtn.getBoundingClientRect().left - speedDialBtn.clientWidth}px`;
+          ripple.style.top = `${event.clientY - speedDialBtn.getBoundingClientRect().top - speedDialBtn.clientHeight}px`;
+          speedDialBtn.appendChild(ripple);
+
+          setTimeout(() => {
+              ripple.remove();
+          }, 500);
+      });
+  </script>
+
+    <!-- footer -->
+
+  <footer class="w-full bg-dum p-8 font-Kanit">
+    <div class="flex flex-row flex-wrap items-center justify-center gap-y-6 gap-x-12 text-center md:justify-between">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" class="w-10">
+            <path fill="#FFD43B" d="M296 160H180.6l42.6-129.8C227.2 15 215.7 0 200 0H56C44 0 33.8 8.9 32.2 20.8l-32 240C-1.7 275.2 9.5 288 24 288h118.7L96.6 482.5c-3.6 15.2 8 29.5 23.3 29.5 8.4 0 16.4-4.4 20.8-12l176-304c9.3-15.9-2.2-36-20.7-36z"/>
+        </svg>
+        <ul class="flex flex-wrap items-center gap-y-2 gap-x-8">
+            <li>
+                <a href="#" class="text-white font-normal transition-colors hover:text-orange-500 focus:text-orange-500">
+                    About Us
+                </a>
+            </li>
+            <li>
+                <a href="#" class="text-white font-normal transition-colors hover:text-orange-500 focus:text-orange-500">
+                    License
+                </a>
+            </li>
+            <li>
+                <a href="#" class="text-white font-normal transition-colors hover:text-orange-500 focus:text-orange-500">
+                    Contribute
+                </a>
+            </li>
+            <li>
+                <a href="#" class="text-white font-normal transition-colors hover:text-orange-500 focus:text-orange-500">
+                    Contact Us
+                </a>
+            </li>
+        </ul>
+    </div>
+    <hr class="my-8 border-gray-200" />
+    <p class="text-center text-white font-normal">&copy; 2023 Tailwind Design</p>
+  </footer>
+
 
 </body>
 </html>
