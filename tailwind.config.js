@@ -15,7 +15,8 @@
       'BG': "url('img/BG GOMODE.png')",
       'BGK': "url('img/KY.png')",
       'KY':"url('img/k6y.png')",
-    }
+    },
+    
 
     },
   },
